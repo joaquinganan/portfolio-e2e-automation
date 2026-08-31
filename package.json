@@ -1,0 +1,23 @@
+{
+  "name": "portfolio-e2e-automation",
+  "version": "1.0.0",
+  "description": "joaquinganan.dev tests",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaquinganan/portfolio-e2e-automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/joaquinganan/portfolio-e2e-automation/issues"
+  },
+  "homepage": "https://github.com/joaquinganan/portfolio-e2e-automation#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.4.0"
+  }
+}
