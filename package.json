@@ -1,13 +1,15 @@
 {
   "name": "portfolio-e2e-automation",
   "version": "1.0.0",
-  "description": "joaquinganan.dev tests",
-  "main": "index.js",
+  "description": "End-to-end Playwright test automation for joaquinganan.dev",
   "scripts": {
     "test:local": "cross-env TEST_ENV=local playwright test --grep @smoke",
     "test:local:full": "cross-env TEST_ENV=local playwright test",
     "test:prod": "cross-env TEST_ENV=prod playwright test",
     "test:prod:smoke": "cross-env TEST_ENV=prod playwright test --grep @smoke",
+    "test:regression": "cross-env TEST_ENV=prod playwright test --grep @regression",
+    "test:responsive": "cross-env TEST_ENV=prod playwright test tests/responsive.spec.js",
+    "test:list": "cross-env TEST_ENV=prod playwright test --list",
     "test:ui": "cross-env TEST_ENV=local playwright test --ui",
     "report": "playwright show-report"
   },

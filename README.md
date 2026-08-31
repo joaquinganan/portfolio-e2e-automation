@@ -2,184 +2,122 @@
 
 [![Playwright Tests](https://github.com/joaquinganan/portfolio-e2e-automation/actions/workflows/playwright.yml/badge.svg)](https://github.com/joaquinganan/portfolio-e2e-automation/actions/workflows/playwright.yml)
 
-End-to-end test automation project for [joaquinganan.dev](https://joaquinganan.dev), built with [Playwright](https://playwright.dev/) and JavaScript.
+End-to-end automation for [joaquinganan.dev](https://joaquinganan.dev), built with Playwright and JavaScript. The project demonstrates reliable cross-browser testing, responsive validation, reusable fixtures, failure diagnostics, and continuous integration.
 
-The project is designed to validate the portfolio's core user journeys, navigation, content, and responsive behavior across desktop and mobile browsers. It also serves as a practical QA automation portfolio demonstrating cross-browser testing, maintainable test architecture, failure diagnostics, and continuous integration.
+## Current coverage
 
-> **Project status:** Initial framework setup. The Playwright configuration and CI pipeline are available; portfolio-specific test suites and page objects are under development.
-
-## Test coverage
-
-Planned coverage includes:
-
-- Homepage content and critical UI elements
-- Navigation between portfolio sections
-- Work, experience, expertise, and contact sections
-- External links and downloadable resources
-- Responsive behavior on desktop and mobile viewports
-- Cross-browser compatibility
-- Basic accessibility and UI validation
-
-The repository currently contains Playwright's starter example tests. Portfolio-specific test files are scaffolded for navigation and responsive testing.
+- Portfolio homepage title and critical content
+- Navigation to intro, expertise, experience, work, impact, and contact sections
+- Section visibility after in-page navigation
+- External-link destinations without depending on third-party websites
+- Back-to-top behavior
+- Horizontal-overflow and critical-content checks on mobile viewports
 
 ## Tech stack
 
-- JavaScript
-- Node.js
+- JavaScript and Node.js
 - Playwright Test
 - GitHub Actions
-- Page Object Model (planned structure)
+- Page/component object pattern
+- Environment-specific configuration with dotenv
 
 ## Browser matrix
 
-Tests are configured to run against:
-
-| Project | Browser or device |
+| Project | Coverage |
 | --- | --- |
-| `chromium-desktop` | Desktop Chrome |
-| `firefox-desktop` | Desktop Firefox |
-| `webkit-desktop` | Desktop Safari |
-| `Mobile Chrome` | Pixel 5 |
-| `Mobile Safari` | iPhone 13 |
+| `chromium-desktop` | Navigation and content in Desktop Chrome |
+| `firefox-desktop` | Navigation and content in Desktop Firefox |
+| `webkit-desktop` | Navigation and content in Desktop Safari |
+| `mobile-chrome` | Responsive checks using Pixel 7 |
+| `mobile-safari` | Responsive checks using iPhone 15 |
 
-Desktop projects use a `1500 × 720` viewport.
+The mobile projects intentionally run only `responsive.spec.js`; this keeps feedback focused and avoids duplicating the entire desktop regression suite.
 
 ## Project structure
 
 ```text
 portfolio-e2e-automation/
-├── .github/workflows/       # GitHub Actions CI workflow
+├── .github/workflows/       # GitHub Actions workflow
+├── crib-notes/              # Personal Playwright reference notes
 ├── fixtures/                # Custom Playwright fixtures
-├── pages/                   # Page objects and section models
-├── tests/                   # End-to-end test specifications
-├── utils/                   # Helpers and reusable test data
-├── playwright.config.js     # Playwright configuration
-├── cli-commands.md          # Useful Playwright CLI commands
-└── environment-variables.md # Environment variable notes
+├── pages/                   # Portfolio page/component objects
+├── tests/                   # Navigation and responsive specifications
+├── utils/                   # Centralized test data
+├── .env.example             # Safe environment template
+└── playwright.config.js     # Browsers, diagnostics, and runtime configuration
 ```
-
-Some scaffolded files are currently empty and will be implemented as the test suite grows.
-
-## Prerequisites
-
-Install the following before running the project:
-
-- [Node.js](https://nodejs.org/) LTS
-- npm
-- Git
 
 ## Getting started
 
-Clone the repository:
+Prerequisites: Node.js LTS, npm, and Git.
 
 ```bash
 git clone https://github.com/joaquinganan/portfolio-e2e-automation.git
 cd portfolio-e2e-automation
-```
-
-Install project dependencies:
-
-```bash
 npm ci
-```
-
-Install the Playwright browsers:
-
-```bash
 npx playwright install
 ```
 
-On Linux or in a CI environment, install the required system dependencies as well:
+Create the local environment file:
 
 ```bash
-npx playwright install --with-deps
+cp .env.example .env.local
 ```
 
-## Running the tests
+Update `BASE_URL` in `.env.local` if your portfolio runs on a different local URL.
 
-Run the complete test suite:
+## Commands
 
-```bash
-npx playwright test
-```
+| Command | Purpose |
+| --- | --- |
+| `npm run test:local` | Local smoke suite |
+| `npm run test:local:full` | Complete suite against the local URL |
+| `npm run test:prod:smoke` | Production smoke suite |
+| `npm run test:prod` | Complete production suite |
+| `npm run test:regression` | Production tests tagged `@regression` |
+| `npm run test:responsive` | Production responsive suite |
+| `npm run test:list` | List production test executions without running them |
+| `npm run test:ui` | Open Playwright UI mode locally |
+| `npm run report` | Open the latest HTML report |
 
-Run tests in headed mode:
+## Diagnostics
 
-```bash
-npx playwright test --headed
-```
-
-Run tests with the Playwright UI:
-
-```bash
-npx playwright test --ui
-```
-
-Run a specific browser project:
-
-```bash
-npx playwright test --project=chromium-desktop
-```
-
-Run a specific test file:
-
-```bash
-npx playwright test tests/navigation.spec.js
-```
-
-Open the latest HTML report:
-
-```bash
-npx playwright show-report
-```
-
-Additional examples are available in [cli-commands.md](./cli-commands.md).
-
-## Configuration and diagnostics
-
-The base URL is configured as:
-
-```text
-https://joaquinganan.dev
-```
-
-The framework captures useful diagnostics when failures occur:
+The framework records:
 
 - Trace on the first retry
 - Screenshot on failure
 - Video retained on failure
 - HTML report
-- GitHub Actions annotations
+- GitHub Actions annotations in CI
 
-Tests run fully in parallel. In CI, failed tests receive up to two retries and execution uses two workers.
+`BASE_URL` is validated when the configuration loads, so missing environment setup fails immediately with a useful message.
 
 ## Continuous integration
 
-The GitHub Actions workflow runs automatically on:
+GitHub Actions runs the production suite on:
 
-- Pushes to `main` or `master`
-- Pull requests targeting `main` or `master`
+- Pushes to `main`
+- Pull requests targeting `main`
+- A daily 06:00 UTC schedule
+- Manual workflow dispatch
 
-The workflow installs dependencies and Playwright browsers, executes the full suite, and uploads the HTML report as an artifact for 30 days.
+The workflow caches npm dependencies and retains the HTML report for 14 days. Failed runs also upload traces, screenshots, videos, and error context from `test-results/`.
 
 ## Roadmap
 
-- Replace the starter example with portfolio-specific tests
-- Implement reusable page and section objects
-- Add navigation and responsive test suites
-- Add custom fixtures and centralized test data
-- Validate contact and external-link behavior
-- Add accessibility checks
-- Add smoke and regression tags
-- Expand CI execution and reporting
+- Add automated accessibility checks with `@axe-core/playwright`
+- Validate the downloadable résumé
+- Add Spanish-language coverage
+- Add visual regression checks for critical sections
+- Introduce API health checks if the portfolio gains backend endpoints
 
 ## Author
 
 **Joaquín Gañán**
 
-- Portfolio: [joaquinganan.dev](https://joaquinganan.dev)
-- GitHub: [@joaquinganan](https://github.com/joaquinganan)
+- [Portfolio](https://joaquinganan.dev)
+- [GitHub](https://github.com/joaquinganan)
 
 ## License
 
-This project currently uses the ISC license as declared in `package.json`.
+This project is licensed under the ISC License.
