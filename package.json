@@ -5,11 +5,13 @@
   "scripts": {
     "test:local": "cross-env TEST_ENV=local playwright test --grep @smoke",
     "test:local:full": "cross-env TEST_ENV=local playwright test",
+
     "test:prod": "cross-env TEST_ENV=prod BASE_URL=https://joaquinganan.dev playwright test",
     "test:prod:smoke": "cross-env TEST_ENV=prod BASE_URL=https://joaquinganan.dev playwright test --grep @smoke",
-    "test:regression": "cross-env TEST_ENV=prod playwright test --grep @regression",
-    "test:responsive": "cross-env TEST_ENV=prod playwright test tests/responsive.spec.js",
-    "test:list": "cross-env TEST_ENV=prod playwright test --list",
+    "test:prod:regression": "cross-env TEST_ENV=prod BASE_URL=https://joaquinganan.dev playwright test --grep @regression",
+    "test:prod:responsive": "cross-env TEST_ENV=prod BASE_URL=https://joaquinganan.dev playwright test tests/responsive.spec.js",
+    "test:prod:list": "cross-env TEST_ENV=prod BASE_URL=https://joaquinganan.dev playwright test --list",
+
     "test:ui": "cross-env TEST_ENV=local playwright test --ui",
     "report": "playwright show-report"
   },
