@@ -1,9 +1,10 @@
 name: Playwright Tests
+
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  schedule:
+    - cron: '0 6 * * *'   # daily at 06:00 UTC
+  workflow_dispatch:        # allows manual trigger from GitHub UI
+
 jobs:
   test:
     timeout-minutes: 60
@@ -15,13 +16,20 @@ jobs:
         node-version: lts/*
     - name: Install dependencies
       run: npm ci
+
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+
+    - name: Create Production Environment File
+      run: echo "BASE_URL=https://joaquinganan.dev" > portfolio-e2e-automation/.env.production
+
+    - name: Run Playwright tests (production)
+      run: npm run test:prod
+
+    - name: Upload HTML report
+      if: always()
+      uses: actions/upload-artifact@v4
       with:
         name: playwright-report
         path: playwright-report/
-        retention-days: 30
+        retention-days: 14

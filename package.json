@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "joaquinganan.dev tests",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:local": "cross-env TEST_ENV=local playwright test --grep @smoke",
+    "test:local:full": "cross-env TEST_ENV=local playwright test",
+    "test:prod": "cross-env TEST_ENV=prod playwright test",
+    "test:prod:smoke": "cross-env TEST_ENV=prod playwright test --grep @smoke",
+    "test:ui": "cross-env TEST_ENV=local playwright test --ui",
+    "report": "playwright show-report"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joaquinganan/portfolio-e2e-automation.git"
@@ -18,6 +25,8 @@
   "homepage": "https://github.com/joaquinganan/portfolio-e2e-automation#readme",
   "devDependencies": {
     "@playwright/test": "^1.62.1",
-    "@types/node": "^26.4.0"
+    "@types/node": "^26.4.0",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2"
   }
 }

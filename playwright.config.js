@@ -1,8 +1,15 @@
 import { defineConfig, devices } from "@playwright/test";
+import dotenv from "dotenv";
+import path from "path";
 
 /**
- * @see https://playwright.dev/docs/test-configuration
+ * Load environment-specific config.
+ * TEST_ENV=prod  -> .env.production
+ * (default)      -> .env.local
  */
+const envFile = process.env.TEST_ENV === 'prod' ? '.env.production' : '.env.local';
+dotenv.config({ path: path.resolve(__dirname, envFile), override: true });
+
 export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
@@ -17,36 +24,18 @@ export default defineConfig({
   },
 
   use: {
-    baseURL: "https://joaquinganan.dev",
+    baseURL: process.env.BASE_URL,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
   },
 
   projects: [
-    {
-      name: "chromium-desktop",
-      use: { ...devices["Desktop Chrome"], viewport: { width: 1500, height: 1300 } },
-    },
+    { name: 'chromium-desktop', use: { ...devices['Desktop Chrome'] } },
+    { name: 'firefox-desktop', use: { ...devices['Desktop Firefox'] } },
+    { name: 'webkit-desktop', use: { ...devices['Desktop Safari'] } },
+    // { name: 'Mobile Chrome', use: { ...devices['Pixel 5'] } },
+    // { name: 'Mobile Safari', use: { ...devices['iPhone 13'] } },
 
-    {
-      name: "firefox-desktop",
-      use: { ...devices["Desktop Firefox"],viewport: { width: 1500, height: 1440 } },
-    },
-
-    {
-      name: "webkit-desktop",
-      use: { ...devices["Desktop Safari"], viewport: { width: 1500, height: 1440 } },
-    },
-
-    {
-      name: "Mobile Chrome",
-      use: { ...devices["Pixel 5"] },
-    },
-
-    {
-      name: "Mobile Safari",
-      use: { ...devices["iPhone 13"] },
-    },
   ],
 });

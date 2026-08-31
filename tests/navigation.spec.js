@@ -5,13 +5,13 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/');
 });
 
-test('has title', async ({ page }) => {
+test('has title @smoke', async ({ page }) => {
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Joaquín Gañán | Senior QA Engineer/);
 });
 
-test('intro link', async ({ page }) => {
+test('intro link @smoke', async ({ page }) => {
 
   // Click the Intro link.
   const linkIntro = page.getByRole('link', { name: 'Joaquín Gañán — home' });
@@ -21,7 +21,7 @@ test('intro link', async ({ page }) => {
   await expect(page).toHaveURL(/.*#intro/);
 });
 
-test('expertise link', async ({ page }) => {
+test('expertise link @smoke', async ({ page }) => {
 
   // Click the Expertise link.
   const linkExpertise = page.getByRole('link', { name: 'Expertise' });
@@ -31,7 +31,7 @@ test('expertise link', async ({ page }) => {
   await expect(page).toHaveURL(/.*#expertise/);
 });
 
-test('experience link', async ({ page }) => {
+test('experience link @smoke', async ({ page }) => {
 
   // Click the Experience link.
   const linkExperience = page.getByRole('link', { name: 'Experience' });
@@ -41,7 +41,7 @@ test('experience link', async ({ page }) => {
   await expect(page).toHaveURL(/.*#experience/);
 });
 
-test('work link', async ({ page }) => {
+test('work link @smoke', async ({ page }) => {
 
   // Click the Work link.
   const linkWork = page.getByRole('link', { name: 'Work' }).first();
@@ -51,7 +51,7 @@ test('work link', async ({ page }) => {
   await expect(page).toHaveURL(/.*#work/);
 });
 
-test('contact link', async ({ page }) => {
+test('contact link @smoke', async ({ page }) => {
 
   // Click the Contact link.
   const linkContact = page.getByRole('link', { name: 'Contact' });
@@ -61,7 +61,7 @@ test('contact link', async ({ page }) => {
   await expect(page).toHaveURL(/.*#contact/);
 });
 
-test('explore my work link', async ({ page }) => {
+test('explore my work link @smoke', async ({ page }) => {
 
   // Click the Explore my work link.
   const linkImpact = page.getByRole('link', { name: 'Explore my work' });
@@ -71,7 +71,7 @@ test('explore my work link', async ({ page }) => {
   await expect(page).toHaveURL(/.*#impact/);
 });
 
-test('view repository link', async ({ page, context }) => {
+test('view repository link @smoke', async ({ page, context }) => {
 
   // Click the View Repository link.
   const linkViewRepository = page.getByRole('link', { name: 'View Repository' });
@@ -82,11 +82,11 @@ test('view repository link', async ({ page, context }) => {
     const newPage = await pagePromise;
 
   // Expects page to redirect to Joaquín Gañán's GitHub and close afterwards.
-  await expect(newPage).toHaveURL('https://github.com/joaquinganan');
+  await expect(newPage).toHaveURL('https://github.com/joaquinganan/m4pp-sqe');
   await newPage.close();
 });
 
-test('linkedin link', async ({ page, context }) => {
+test('linkedin link @smoke', async ({ page, context }) => {
 
   // Click the LinkedIn link.
   const linkLinkedIn = page.getByRole('link', { name: 'LinkedIn' });
@@ -101,7 +101,7 @@ test('linkedin link', async ({ page, context }) => {
   await newPage.close();
 });
 
-test('gitHub link', async ({ page, context }) => {
+test('gitHub link @smoke', async ({ page, context }) => {
 
   // Click the GitHub link.
   const linkGitHub = page.getByRole('link', { name: 'GitHub' });
@@ -116,7 +116,7 @@ test('gitHub link', async ({ page, context }) => {
   await newPage.close();
 });
 
-test('back to top link', async ({ page }) => {
+test('back to top link @smoke', async ({ page }) => {
 
   // Click the Back to top link.
   const linkBackToTop = page.getByRole('link', { name: 'Back to top' });
