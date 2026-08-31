@@ -26,17 +26,17 @@ export default defineConfig({
   projects: [
     {
       name: "chromium-desktop",
-      use: { ...devices["Desktop Chrome"], viewport: { width: 1500, height: 720 } },
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1500, height: 1300 } },
     },
 
     {
       name: "firefox-desktop",
-      use: { ...devices["Desktop Firefox"],viewport: { width: 1500, height: 720 } },
+      use: { ...devices["Desktop Firefox"],viewport: { width: 1500, height: 1440 } },
     },
 
     {
       name: "webkit-desktop",
-      use: { ...devices["Desktop Safari"], viewport: { width: 1500, height: 720 } },
+      use: { ...devices["Desktop Safari"], viewport: { width: 1500, height: 1440 } },
     },
 
     {
