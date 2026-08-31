@@ -6,7 +6,7 @@ export const sectionNavigation = [
 ];
 
 export const externalLinks = [
-  { name: 'View Repository', href: /github\.com\/joaquinganan\/m4pp-sqe\/?$/ },
+  { name: 'View repository', href: /github\.com\/joaquinganan\/m4pp-sqe\/?$/ },
   { name: 'LinkedIn', href: /linkedin\.com\/in\/joaquinganan95\/?$/ },
   { name: 'GitHub', href: /github\.com\/joaquinganan\/?$/ },
 ];
