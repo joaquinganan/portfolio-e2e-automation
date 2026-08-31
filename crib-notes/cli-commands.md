@@ -85,6 +85,15 @@
  Run tests with trace recording enabled (useful for debugging)
  npx playwright test --project=chromium --trace on
 
+    | Command                   | Target                                    |
+    | ------------------------- | ----------------------------------------- |
+    | `npm run test:local`      | `http://localhost:5173` smoke tests       |
+    | `npm run test:local:full` | `http://localhost:5173` complete suite    |
+    | `npm run test:ui`         | `http://localhost:5173` Playwright UI     |
+    | `npm run test:prod:smoke` | `https://joaquinganan.dev` smoke tests    |
+    | `npm run test:prod`       | `https://joaquinganan.dev` complete suite |
+
+
  Test Data Generator (also save it into the dependencies)
  npm i @faker-js/faker --save-dev --force 
 
