@@ -7,7 +7,11 @@ test.beforeEach(async ({ portfolioPage }) => {
 
 test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   await expect(page).toHaveTitle(/Joaquín Gañán \| Senior QA Engineer/);
-  await expect(portfolioPage.portrait).toBeVisible();\n  await expect(\n    page.getByText(/Senior QA Engineer with 7\\+ years of experience/),\n  ).toBeVisible();\n  await expect(portfolioPage.section(\"impact\")).toContainText(/6\\s*QAs mentored/);
+  await expect(portfolioPage.portrait).toBeVisible();
+  await expect(
+    page.getByText(/Senior QA Engineer with 7\+ years of experience/),
+  ).toBeVisible();
+  await expect(portfolioPage.section("impact")).toContainText(/6\s*QAs mentored/);
 });
 
 test("home link returns to the intro section @smoke", async ({
