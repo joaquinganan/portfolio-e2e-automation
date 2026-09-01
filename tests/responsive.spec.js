@@ -14,7 +14,7 @@ test('page has no horizontal overflow @responsive', async ({ page }) => {
 
 test('critical content remains available @responsive', async ({ page, portfolioPage }) => {
   await expect(portfolioPage.portrait).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Explore my work' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'View selected work' })).toBeVisible();
   await expect(portfolioPage.section('work')).toBeAttached();
   await expect(portfolioPage.section('contact')).toBeAttached();
 });

@@ -32,14 +32,14 @@ for (const { name, id } of sectionNavigation) {
   });
 }
 
-test("Explore my work opens the impact section @smoke", async ({
+test("View selected work opens the work section @smoke", async ({
   page,
   portfolioPage,
 }) => {
-  await page.getByRole("link", { name: "Explore my work" }).click();
+  await page.getByRole("link", { name: "View selected work" }).click();
 
-  await expect(page).toHaveURL(/#impact$/);
-  await expect(portfolioPage.section("impact")).toBeInViewport();
+  await expect(page).toHaveURL(/#work$/);
+  await expect(portfolioPage.section("work")).toBeInViewport();
 });
 
 for (const { name, href } of externalLinks) {
