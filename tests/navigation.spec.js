@@ -12,6 +12,9 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
     page.getByText(/Senior QA Engineer with 7\+ years of experience/),
   ).toBeVisible();
   await expect(portfolioPage.section("impact")).toContainText(/6\s*QAs mentored/);
+  await expect(portfolioPage.section("impact")).toContainText(
+    "Newtech SRL · Verizon contractor · 2019 — 2024",
+  );
 });
 
 test("home link returns to the intro section @smoke", async ({
