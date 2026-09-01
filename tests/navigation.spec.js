@@ -15,6 +15,11 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   await expect(portfolioPage.section("impact")).toContainText(
     "Newtech SRL · Verizon contractor · 2019 - 2024",
   );
+  await expect(portfolioPage.section("qa-lab")).toContainText("16 test cases");
+  await expect(portfolioPage.section("qa-lab")).toContainText(
+    "44 cross-browser executions",
+  );
+  await expect(portfolioPage.section("qa-lab")).toContainText("5 browser projects");
 });
 
 test("home link returns to the intro section @smoke", async ({
