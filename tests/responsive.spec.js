@@ -60,7 +60,13 @@ test('mobile section links land below the sticky header with one active item @re
       };
     });
 
-  await expect.poll(async () => (await getPositions()).sectionTop).toBeLessThan(500);
+  await expect
+    .poll(async () => {
+      const positions = await getPositions();
+      return positions.sectionTop - positions.headerBottom;
+    })
+    .toBeLessThanOrEqual(80);
+
   const positions = await getPositions();
   expect(positions.sectionTop).toBeGreaterThanOrEqual(positions.headerBottom - 2);
   expect(positions.sectionTop).toBeLessThanOrEqual(positions.headerBottom + 80);
