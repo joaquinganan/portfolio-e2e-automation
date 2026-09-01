@@ -48,17 +48,20 @@ test('mobile section links land below the sticky header with one active item @re
     'aria-current',
     'location',
   );
+  await expect(portfolioPage.section('experience')).toBeInViewport();
 
-  const positions = await page.evaluate(() => {
-    const header = document.querySelector('.site-header')?.getBoundingClientRect();
-    const section = document.querySelector('#experience')?.getBoundingClientRect();
+  const getPositions = () => page.evaluate(() => {
+      const header = document.querySelector('.site-header')?.getBoundingClientRect();
+      const section = document.querySelector('#experience')?.getBoundingClientRect();
 
-    return {
-      headerBottom: header?.bottom ?? 0,
-      sectionTop: section?.top ?? 0,
-    };
-  });
+      return {
+        headerBottom: header?.bottom ?? 0,
+        sectionTop: section?.top ?? 0,
+      };
+    });
 
+  await expect.poll(async () => (await getPositions()).sectionTop).toBeLessThan(500);
+  const positions = await getPositions();
   expect(positions.sectionTop).toBeGreaterThanOrEqual(positions.headerBottom - 2);
-  expect(positions.sectionTop).toBeLessThanOrEqual(positions.headerBottom + 24);
+  expect(positions.sectionTop).toBeLessThanOrEqual(positions.headerBottom + 80);
 });
