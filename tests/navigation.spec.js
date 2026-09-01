@@ -13,7 +13,7 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   ).toBeVisible();
   await expect(portfolioPage.section("impact")).toContainText(/6\s*QAs mentored/);
   await expect(portfolioPage.section("impact")).toContainText(
-    "Newtech SRL · Verizon contractor · 2019 — 2024",
+    "Newtech SRL · Verizon contractor · 2019 - 2024",
   );
 });
 
@@ -69,4 +69,21 @@ test("Back to top returns to the intro section @regression", async ({
 
   await expect(page).toHaveURL(/#intro$/);
   await expect(portfolioPage.section("intro")).toBeInViewport();
+});
+
+test("resume download follows the active language @regression", async ({
+  page,
+  portfolioPage,
+}) => {
+  await expect(portfolioPage.englishResumeLink).toHaveAttribute(
+    "href",
+    "/joaquin-ganan-resume-en.pdf",
+  );
+
+  await portfolioPage.languageButton.click();
+
+  await expect(page.getByRole("link", { name: "Descargar CV (ES)" })).toHaveAttribute(
+    "href",
+    "/joaquin-ganan-resume-es.pdf",
+  );
 });
