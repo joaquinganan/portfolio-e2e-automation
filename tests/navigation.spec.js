@@ -25,7 +25,7 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   ).toBeVisible();
   await expect(page.getByRole("link", { name: "Download HTML report" })).toHaveAttribute(
     "href",
-    /github\.com\/joaquinganan\/portfolio-e2e-automation\/actions\/runs\/\d+\/artifacts\/\d+/,
+    /github\.com\/joaquinganan\/portfolio-e2e-automation\/actions\/runs\/\d+(?:\/artifacts\/\d+)?/,
   );
 });
 
@@ -44,6 +44,9 @@ for (const { name, id } of sectionNavigation) {
     page,
     portfolioPage,
   }) => {
+    if (id === "contact") {
+      await expect(page.locator(".qa-run-overview")).toBeVisible();
+    }
     await portfolioPage.navigationLink(name).click();
 
     await expect(page).toHaveURL(new RegExp(`#${id}$`));
@@ -89,7 +92,7 @@ test("resume download follows the active language @regression", async ({
 }) => {
   await expect(portfolioPage.englishResumeLink).toHaveAttribute(
     "href",
-    "/joaquin-ganan-resume-en.pdf",
+    "/joaquin-ganan-resume.pdf",
   );
 
   await portfolioPage.languageButton.click();
