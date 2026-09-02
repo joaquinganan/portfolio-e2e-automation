@@ -20,13 +20,22 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
     /44\s*Cross-browser executions/,
   );
   await expect(portfolioPage.section("qa-lab")).toContainText(/5\s*Browser projects/);
-  await expect(
-    page.getByRole("button", { name: /Run production suite|Suite in progress/ }),
-  ).toBeVisible();
+  const runButton = page.getByRole("button", {
+    name: /Run production suite|Suite in progress/,
+  });
+  await expect(runButton).toBeVisible();
   await expect(page.getByRole("link", { name: "Download HTML report" })).toHaveAttribute(
     "href",
     /github\.com\/joaquinganan\/portfolio-e2e-automation\/actions\/runs\/\d+(?:\/artifacts\/\d+)?/,
   );
+
+  const selectedView = page.getByRole("tab", { selected: true });
+  const expectedView = (await runButton.textContent())?.includes("in progress")
+    ? /Live progress/
+    : /Coverage/;
+  await expect(selectedView).toHaveAccessibleName(expectedView);
+  await selectedView.click();
+  await expect(page.getByRole("tab", { selected: true })).toHaveCount(0);
 });
 
 test("home link returns to the intro section @smoke", async ({
