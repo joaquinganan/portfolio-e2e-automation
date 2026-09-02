@@ -20,7 +20,7 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
     /44\s*Cross-browser executions/,
   );
   await expect(portfolioPage.section("qa-lab")).toContainText(/5\s*Browser projects/);
-  const runButton = page.getByRole("button", {
+  await expect(portfolioPage.section("work")).toContainText("Self-testing QA Portfolio");\n  await expect(portfolioPage.section("work")).toContainText("View automation framework");\n  const runButton = page.getByRole("button", {
     name: /Run production suite|Suite in progress/,
   });
   await expect(runButton).toBeVisible();
