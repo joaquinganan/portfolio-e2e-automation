@@ -409,7 +409,7 @@ export class PortfolioPage {
   constructor(page) {
     this.page = page;
     this.homeLink = page.getByRole('link', {
-      name: 'Joaquín Gañán — home',
+      name: 'Joaquín Gañán - home',
     });
     this.portrait = page.getByRole('img', {
       name: 'Portrait of Joaquín Gañán',
