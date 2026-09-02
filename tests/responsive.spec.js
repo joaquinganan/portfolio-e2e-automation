@@ -52,7 +52,7 @@ test('mobile section links land below the sticky header with one active item @re
 
   const getPositions = () => page.evaluate(() => {
       const header = document.querySelector('.site-header')?.getBoundingClientRect();
-      const section = document.querySelector('#experience')?.getBoundingClientRect();
+      const section = document.querySelector('#experience .section-label')?.getBoundingClientRect();
 
       return {
         headerBottom: header?.bottom ?? 0,
