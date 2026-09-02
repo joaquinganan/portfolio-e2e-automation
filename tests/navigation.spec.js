@@ -32,7 +32,7 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   const selectedView = page.getByRole("tab", { selected: true });
   const expectedView = (await runButton.textContent())?.includes("in progress")
     ? /Live progress/
-    : /Coverage/;
+    : /Test distribution/;
   await expect(selectedView).toHaveAccessibleName(expectedView);
   await selectedView.click();
   await expect(page.getByRole("tab", { selected: true })).toHaveCount(0);
