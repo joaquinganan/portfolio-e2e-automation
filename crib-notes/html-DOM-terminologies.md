@@ -1,4 +1,4 @@
-# Playwright DOM Fundamentals — Notes
+# Playwright DOM Fundamentals - Notes
 
 ## 1. Purpose of the Lesson
 - Before learning Playwright locators and actions, it is important to understand **HTML and DOM fundamentals**.
