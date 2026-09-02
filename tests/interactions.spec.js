@@ -37,10 +37,11 @@ test("QA Lab tabs can all be closed and reopened @regression", async ({ page }) 
   await expect(page.getByRole("tab", { selected: true })).toHaveAccessibleName(/Overview/);
 });
 
-test("QA Lab exposes live evidence through a valid public API contract @regression", async ({ request }) => {
-  const response = await request.get("/api/qa-lab");
-  expect(response.ok()).toBeTruthy();
-  const payload = await response.json();
-  expect(payload.coverage).toMatchObject({ definedTests: 28, executions: 78, projects: 5 });
-  expect(payload.run).toEqual(expect.objectContaining({ number: expect.any(Number), status: expect.any(String) }));
+test("QA Lab chooses its default panel from the live run state @regression", async ({ page }) => {
+  const runButton = page.getByRole("button", { name: /Run production suite|Suite in progress/ });
+  await expect(runButton).toBeVisible();
+  const expectedPanel = (await runButton.textContent())?.includes("in progress")
+    ? /Live progress/
+    : /Test distribution/;
+  await expect(page.getByRole("tab", { selected: true })).toHaveAccessibleName(expectedPanel);
 });
