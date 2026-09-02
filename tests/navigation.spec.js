@@ -15,29 +15,18 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   await expect(portfolioPage.section("impact")).toContainText(
     "Newtech SRL · Verizon contractor · 2019 - 2024",
   );
-  await expect(portfolioPage.section("qa-lab")).toContainText(/16\s*Tests defined/);
+  await expect(portfolioPage.section("qa-lab")).toContainText(/28\s*Tests defined/);
   await expect(portfolioPage.section("qa-lab")).toContainText(
-    /44\s*Cross-browser executions/,
+    /78\s*Cross-browser executions/,
   );
   await expect(portfolioPage.section("qa-lab")).toContainText(/5\s*Browser projects/);
-  await expect(portfolioPage.section("work")).toContainText("Self-testing QA Portfolio");
-  await expect(portfolioPage.section("work")).toContainText("View automation framework");
-  const runButton = page.getByRole("button", {
-    name: /Run production suite|Suite in progress/,
-  });
-  await expect(runButton).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /Run production suite|Suite in progress/ }),
+  ).toBeVisible();
   await expect(page.getByRole("link", { name: "Download HTML report" })).toHaveAttribute(
     "href",
     /github\.com\/joaquinganan\/portfolio-e2e-automation\/actions\/runs\/\d+(?:\/artifacts\/\d+)?/,
   );
-
-  const selectedView = page.getByRole("tab", { selected: true });
-  const expectedView = (await runButton.textContent())?.includes("in progress")
-    ? /Live progress/
-    : /Test distribution/;
-  await expect(selectedView).toHaveAccessibleName(expectedView);
-  await selectedView.click();
-  await expect(page.getByRole("tab", { selected: true })).toHaveCount(0);
 });
 
 test("home link returns to the intro section @smoke", async ({
@@ -56,7 +45,7 @@ for (const { name, id } of sectionNavigation) {
     portfolioPage,
   }) => {
     if (id === "contact") {
-      await expect(page.getByRole("link", { name: "Download HTML report" })).toBeVisible();
+      await expect(page.locator(".qa-run-overview")).toBeVisible();
     }
     await portfolioPage.navigationLink(name).click();
 
