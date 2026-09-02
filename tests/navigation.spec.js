@@ -45,7 +45,7 @@ for (const { name, id } of sectionNavigation) {
     portfolioPage,
   }) => {
     if (id === "contact") {
-      await expect(page.locator(".qa-run-overview")).toBeVisible();
+      await expect(page.getByRole("link", { name: "Download HTML report" })).toBeVisible();
     }
     await portfolioPage.navigationLink(name).click();
 
