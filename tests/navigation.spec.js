@@ -23,9 +23,9 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   await expect(
     page.getByRole("button", { name: /Run production suite|Suite in progress/ }),
   ).toBeVisible();
-  await expect(page.getByRole("link", { name: "Open HTML report" })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Download HTML report" })).toHaveAttribute(
     "href",
-    "https://joaquinganan.github.io/portfolio-e2e-automation/",
+    /github\.com\/joaquinganan\/portfolio-e2e-automation\/actions\/runs\/\d+\/artifacts\/\d+/,
   );
 });
 
