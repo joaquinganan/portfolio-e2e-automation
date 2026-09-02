@@ -17,8 +17,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: playwright-${{ github.ref }}
@@ -60,21 +58,3 @@ jobs:
         name: playwright-test-results
         path: test-results/
         retention-days: 14
-
-    - name: Upload report for GitHub Pages
-      if: always()
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: playwright-report/
-
-  publish-report:
-    if: always() && github.event_name != 'pull_request'
-    needs: test
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Publish latest HTML report
-        id: deployment
-        uses: actions/deploy-pages@v4
