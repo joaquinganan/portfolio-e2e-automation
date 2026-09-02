@@ -15,11 +15,18 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   await expect(portfolioPage.section("impact")).toContainText(
     "Newtech SRL · Verizon contractor · 2019 - 2024",
   );
-  await expect(portfolioPage.section("qa-lab")).toContainText("16 test cases");
+  await expect(portfolioPage.section("qa-lab")).toContainText(/16\s*Tests defined/);
   await expect(portfolioPage.section("qa-lab")).toContainText(
-    "44 cross-browser executions",
+    /44\s*Cross-browser executions/,
   );
-  await expect(portfolioPage.section("qa-lab")).toContainText("5 browser projects");
+  await expect(portfolioPage.section("qa-lab")).toContainText(/5\s*Browser projects/);
+  await expect(
+    page.getByRole("button", { name: /Run production suite|Suite in progress/ }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Open HTML report" })).toHaveAttribute(
+    "href",
+    "https://joaquinganan.github.io/portfolio-e2e-automation/",
+  );
 });
 
 test("home link returns to the intro section @smoke", async ({
