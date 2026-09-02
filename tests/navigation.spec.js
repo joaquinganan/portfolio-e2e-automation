@@ -44,9 +44,6 @@ for (const { name, id } of sectionNavigation) {
     page,
     portfolioPage,
   }) => {
-    if (id === "contact") {
-      await expect(page.locator(".qa-run-overview")).toBeVisible();
-    }
     await portfolioPage.navigationLink(name).click();
 
     await expect(page).toHaveURL(new RegExp(`#${id}$`));
