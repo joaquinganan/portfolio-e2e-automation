@@ -28,6 +28,34 @@ test("language switch updates document language and primary navigation @regressi
   await expect(page.getByRole("link", { name: "Ir al Lab", exact: true })).toBeVisible();
 });
 
+test("theme toggle switches modes and preserves the preference @regression", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.evaluate(() => localStorage.removeItem("portfolio-theme"));
+  await page.reload();
+
+  const darkModeButton = page.getByRole("button", { name: "Switch to dark mode" });
+  await expect(darkModeButton).toHaveAttribute("aria-pressed", "false");
+  await darkModeButton.click();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+  await expect(page.getByRole("button", { name: "Switch to light mode" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+
+  await page.reload();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+});
+
+test("Selected Work prioritizes the portfolio and omits the redundant Lab link @regression", async ({ page }) => {
+  const projects = page.locator("#work .project-row h3");
+  await expect(projects).toHaveText([
+    "Self-testing QA Portfolio",
+    "M4PP Playwright Automation Suite",
+    "Integrated Release Assurance",
+  ]);
+  await expect(page.locator('#work a[href="#qa-lab"]')).toHaveCount(0);
+});
+
 test("QA Lab tabs can all be closed and reopened @regression", async ({ page }) => {
   const selected = page.getByRole("tab", { selected: true });
   await expect(selected).toHaveCount(1);
