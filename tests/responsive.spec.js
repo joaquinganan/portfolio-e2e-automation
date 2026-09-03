@@ -23,9 +23,11 @@ test('Back to top becomes a compact fixed control after scrolling @responsive', 
   page,
   portfolioPage,
 }) => {
-  await expect(portfolioPage.backToTopButton).not.toBeVisible();
+  await expect(portfolioPage.backToTopButton).not.toHaveClass(/is-visible/);
+  await expect(portfolioPage.backToTopButton).toHaveAttribute('tabindex', '-1');
   await page.evaluate(() => window.scrollTo(0, 500));
-  await expect(portfolioPage.backToTopButton).toBeVisible();
+  await expect(portfolioPage.backToTopButton).toHaveClass(/is-visible/);
+  await expect(portfolioPage.backToTopButton).toHaveAttribute('tabindex', '0');
 
   const [buttonBox, viewport] = await Promise.all([
     portfolioPage.backToTopButton.boundingBox(),
