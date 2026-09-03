@@ -5,7 +5,14 @@ test.beforeEach(async ({ portfolioPage }) => portfolioPage.goto());
 test("social sharing metadata and favicon are configured @regression", async ({ page }) => {
   await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", /Joaquín Gañán/);
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /og-portfolio\.png/);
-  await expect(page.locator('link[rel="icon"]').first()).toHaveAttribute("href", /favicon\.svg/);
+  await expect(page.locator('link[rel="icon"][media="(prefers-color-scheme: light)"]')).toHaveAttribute(
+    "href",
+    /favicon-light\.svg/,
+  );
+  await expect(page.locator('link[rel="icon"][media="(prefers-color-scheme: dark)"]')).toHaveAttribute(
+    "href",
+    /favicon-dark\.svg/,
+  );
 });
 
 test("résumé link preserves its download contract @regression", async ({ portfolioPage }) => {
