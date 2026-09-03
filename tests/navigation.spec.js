@@ -77,9 +77,10 @@ test("Back to top returns to the intro section @regression", async ({
   portfolioPage,
 }) => {
   await portfolioPage.navigationLink("Contact").click();
-  await portfolioPage.backToTopLink.click();
+  await expect(portfolioPage.backToTopButton).toBeVisible();
+  await portfolioPage.backToTopButton.click();
 
-  await expect(page).toHaveURL(/#intro$/);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(8);
   await expect(portfolioPage.section("intro")).toBeInViewport();
 });
 

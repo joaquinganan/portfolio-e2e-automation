@@ -19,21 +19,23 @@ test('critical content remains available @responsive', async ({ page, portfolioP
   await expect(portfolioPage.section('contact')).toBeAttached();
 });
 
-test('Back to top remains a compact right-aligned control @responsive', async ({
+test('Back to top becomes a compact fixed control after scrolling @responsive', async ({
   page,
   portfolioPage,
 }) => {
-  await portfolioPage.backToTopLink.scrollIntoViewIfNeeded();
+  await expect(portfolioPage.backToTopButton).not.toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, 500));
+  await expect(portfolioPage.backToTopButton).toBeVisible();
 
-  const [linkBox, footerBox] = await Promise.all([
-    portfolioPage.backToTopLink.boundingBox(),
-    page.locator('.site-footer').boundingBox(),
+  const [buttonBox, viewport] = await Promise.all([
+    portfolioPage.backToTopButton.boundingBox(),
+    page.evaluate(() => ({ width: window.innerWidth, height: window.innerHeight })),
   ]);
 
-  expect(linkBox).not.toBeNull();
-  expect(footerBox).not.toBeNull();
-  expect(linkBox.width).toBeLessThan(footerBox.width * 0.75);
-  expect(linkBox.x + linkBox.width).toBeGreaterThan(footerBox.x + footerBox.width * 0.7);
+  expect(buttonBox).not.toBeNull();
+  expect(buttonBox.width).toBeLessThanOrEqual(52);
+  expect(buttonBox.x + buttonBox.width).toBeGreaterThan(viewport.width - 80);
+  expect(buttonBox.y + buttonBox.height).toBeGreaterThan(viewport.height - 80);
 });
 
 test('mobile section links land below the sticky header with one active item @responsive', async ({
