@@ -15,9 +15,9 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   await expect(portfolioPage.section("impact")).toContainText(
     "Newtech SRL · Verizon contractor · 2019 - 2024",
   );
-  await expect(portfolioPage.section("qa-lab")).toContainText(/28\s*Tests defined/);
+  await expect(portfolioPage.section("qa-lab")).toContainText(/30\s*Tests defined/);
   await expect(portfolioPage.section("qa-lab")).toContainText(
-    /78\s*Cross-browser executions/,
+    /84\s*Cross-browser executions/,
   );
   await expect(portfolioPage.section("qa-lab")).toContainText(/5\s*Browser projects/);
   await expect(
