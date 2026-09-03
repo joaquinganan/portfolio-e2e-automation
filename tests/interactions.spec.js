@@ -67,7 +67,7 @@ test("QA Lab tabs can all be closed and reopened @regression", async ({ page }) 
 
 test("QA Lab chooses its default panel from the live run state @regression", async ({ page }) => {
   const runButton = page.getByRole("button", { name: /Run production suite|Suite in progress/ });
-  await expect(runButton).toBeVisible();
+  await expect(page.locator(".qa-run-strip")).toBeVisible();
   const expectedPanel = (await runButton.textContent())?.includes("in progress")
     ? /Live progress/
     : /Test distribution/;
