@@ -16,7 +16,7 @@ on:
         type: string
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: playwright-${{ github.ref }}
@@ -42,34 +42,6 @@ jobs:
       run: npm run test:prod
       env:
         BASE_URL: https://joaquinganan.dev
-
-    - name: Record representative browser replay
-      if: success()
-      run: node scripts/record-portfolio-replay.mjs
-      env:
-        BASE_URL: https://joaquinganan.dev
-
-    - name: Upload browser replay
-      if: success()
-      uses: actions/upload-artifact@v4
-      with:
-        name: browser-replay
-        path: replay-output/portfolio-browser-replay.webm
-        retention-days: 14
-
-    - name: Publish latest browser replay
-      if: success() && github.event_name != 'pull_request'
-      run: |
-        mkdir -p /tmp/portfolio-replay
-        cp replay-output/portfolio-browser-replay.webm /tmp/portfolio-replay/
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git switch --orphan replay-assets
-        git rm -rf . || true
-        cp /tmp/portfolio-replay/portfolio-browser-replay.webm .
-        git add portfolio-browser-replay.webm
-        git commit -m "Update browser replay for run #${GITHUB_RUN_NUMBER}"
-        git push --force origin replay-assets
 
     - name: Upload HTML report
       if: always()
