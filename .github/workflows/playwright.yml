@@ -65,7 +65,7 @@ jobs:
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git switch --orphan replay-assets
-        git rm -rf .
+        git rm -rf . || true
         cp /tmp/portfolio-replay/portfolio-browser-replay.webm .
         git add portfolio-browser-replay.webm
         git commit -m "Update browser replay for run #${GITHUB_RUN_NUMBER}"
