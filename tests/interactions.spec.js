@@ -57,12 +57,24 @@ test("Selected Work prioritizes the portfolio and omits the redundant Lab link @
   await expect(page.locator('#work a[href="#qa-lab"]')).toHaveCount(0);
 });
 
-test("Agentic Finance Tracker is labelled as AI-built with human QA, in both languages @regression", async ({ page, portfolioPage }) => {
+test("Agentic Finance Tracker is labelled as AI-built with human QA, in both languages, and serves its demo @regression", async ({ page, portfolioPage }) => {
   const card = page.locator("#work .project-row").filter({
     has: page.getByRole("heading", { name: "Agentic Finance Tracker", exact: true }),
   });
   await expect(card.locator(".project-type")).toHaveText("AI-built system · human QA");
-  await expect(card.getByRole("link")).toHaveCount(2);
+  await expect(card.getByRole("link")).toHaveCount(3);
+  // the demo: player page + both video files are really served (WebM first, MP4 for Safari)
+  const demo = card.getByRole("link", { name: "Watch demo (50 s)", exact: true });
+  await expect(demo).toHaveAttribute("href", "/demos/agentic-fin-tracker.html");
+  await expect(demo).toHaveAttribute("target", "_blank");
+  const player = await page.request.get("/demos/agentic-fin-tracker.html");
+  expect(player.ok()).toBeTruthy();
+  expect(await player.text()).toContain('<source src="/demos/agentic-fin-tracker-demo.webm" type="video/webm">');
+  for (const file of ["agentic-fin-tracker-demo.webm", "agentic-fin-tracker-demo.mp4"]) {
+    const video = await page.request.get(`/demos/${file}`);
+    expect(video.ok(), file).toBeTruthy();
+    expect((await video.body()).length, file).toBeGreaterThan(100_000);
+  }
   await portfolioPage.languageButton.click();
   await expect(card.locator(".project-type")).toHaveText("Sistema creado con IA · QA humano");
   await expect(card.getByRole("link", { name: "Ver repositorio del tracker", exact: true }))
