@@ -1,5 +1,11 @@
 import { test, expect } from "../fixtures/test-fixtures";
 import { externalLinks, sectionNavigation } from "../utils/test-data";
+import fs from "node:fs";
+import path from "node:path";
+
+// Generated from the real suite (npm run coverage:update). Read when the test runs, not when the file loads,
+// so `playwright test --list` — which generates this file — never depends on it.
+const readCoverage = () => JSON.parse(fs.readFileSync(path.join(__dirname, "..", "qa-lab-coverage.json"), "utf8"));
 
 test.beforeEach(async ({ portfolioPage }) => {
   await portfolioPage.goto();
@@ -15,11 +21,13 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   await expect(portfolioPage.section("impact")).toContainText(
     "Newtech SRL · Verizon contractor · 2019 - 2024",
   );
-  await expect(portfolioPage.section("qa-lab")).toContainText(/33\s*Tests defined/);
+  // the QA Lab must report the suite that actually exists (qa-lab-coverage.json), not numbers typed by hand
+  const coverage = readCoverage();
+  await expect(portfolioPage.section("qa-lab")).toContainText(new RegExp(`${coverage.definedTests}\\s*Tests defined`));
   await expect(portfolioPage.section("qa-lab")).toContainText(
-    /93\s*Cross-browser executions/,
+    new RegExp(`${coverage.executions}\\s*Cross-browser executions`),
   );
-  await expect(portfolioPage.section("qa-lab")).toContainText(/5\s*Browser projects/);
+  await expect(portfolioPage.section("qa-lab")).toContainText(new RegExp(`${coverage.projects}\\s*Browser projects`));
   await expect(
     page.getByRole("button", { name: /Run production suite|Suite in progress/ }),
   ).toBeVisible();

@@ -1,0 +1,49 @@
+{
+  "definedTests": 33,
+  "executions": 93,
+  "projects": 5,
+  "categories": [
+    {
+      "name": "Smoke",
+      "defined": 5,
+      "executions": 15
+    },
+    {
+      "name": "Regression",
+      "defined": 22,
+      "executions": 66
+    },
+    {
+      "name": "Responsive",
+      "defined": 6,
+      "executions": 12
+    }
+  ],
+  "browsers": [
+    {
+      "project": "chromium-desktop",
+      "target": "Desktop Chrome",
+      "executions": 27
+    },
+    {
+      "project": "firefox-desktop",
+      "target": "Desktop Firefox",
+      "executions": 27
+    },
+    {
+      "project": "webkit-desktop",
+      "target": "Desktop Safari",
+      "executions": 27
+    },
+    {
+      "project": "mobile-chrome",
+      "target": "Pixel 7",
+      "executions": 6
+    },
+    {
+      "project": "mobile-safari",
+      "target": "iPhone 15",
+      "executions": 6
+    }
+  ]
+}

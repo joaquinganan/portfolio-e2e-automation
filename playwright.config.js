@@ -46,26 +46,31 @@ export default defineConfig({
       name: 'chromium-desktop',
       testIgnore: /responsive\.spec\.js/,
       use: { ...devices['Desktop Chrome'] },
+      metadata: { target: 'Desktop Chrome' },   // label shown in the portfolio's QA Lab
     },
     {
       name: 'firefox-desktop',
       testIgnore: /responsive\.spec\.js/,
       use: { ...devices['Desktop Firefox'] },
+      metadata: { target: 'Desktop Firefox' },   // label shown in the portfolio's QA Lab
     },
     {
       name: 'webkit-desktop',
       testIgnore: /responsive\.spec\.js/,
       use: { ...devices['Desktop Safari'] },
+      metadata: { target: 'Desktop Safari' },   // label shown in the portfolio's QA Lab
     },
     {
       name: 'mobile-chrome',
       testMatch: /responsive\.spec\.js/,
       use: { ...devices['Pixel 7'] },
+      metadata: { target: 'Pixel 7' },   // label shown in the portfolio's QA Lab
     },
     {
       name: 'mobile-safari',
       testMatch: /responsive\.spec\.js/,
       use: { ...devices['iPhone 15'] },
+      metadata: { target: 'iPhone 15' },   // label shown in the portfolio's QA Lab
     },
   ],
 });

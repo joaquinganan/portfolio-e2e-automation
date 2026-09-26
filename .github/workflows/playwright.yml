@@ -35,6 +35,9 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Check QA Lab coverage file is current
+      run: npm run coverage:check
+
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
