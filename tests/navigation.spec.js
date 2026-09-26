@@ -17,7 +17,7 @@ test("loads the portfolio homepage @smoke", async ({ page, portfolioPage }) => {
   );
   await expect(portfolioPage.section("qa-lab")).toContainText(/33\s*Tests defined/);
   await expect(portfolioPage.section("qa-lab")).toContainText(
-    /84\s*Cross-browser executions/,
+    /93\s*Cross-browser executions/,
   );
   await expect(portfolioPage.section("qa-lab")).toContainText(/5\s*Browser projects/);
   await expect(
