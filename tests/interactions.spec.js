@@ -64,7 +64,7 @@ test("Agentic Finance Tracker is labelled as AI-built with human QA, in both lan
   await expect(card.locator(".project-type")).toHaveText("AI-built system · human QA");
   await expect(card.getByRole("link")).toHaveCount(3);
   // the demo: player page + both video files are really served (WebM first, MP4 for Safari)
-  const demo = card.getByRole("link", { name: "Watch demo (50 s)", exact: true });
+  const demo = card.getByRole("link", { name: "Watch demo", exact: true });
   await expect(demo).toHaveAttribute("href", "/demos/agentic-fin-tracker.html");
   await expect(demo).toHaveAttribute("target", "_blank");
   const player = await page.request.get("/demos/agentic-fin-tracker.html");
