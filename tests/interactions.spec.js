@@ -50,10 +50,23 @@ test("Selected Work prioritizes the portfolio and omits the redundant Lab link @
   const projects = page.locator("#work .project-row h3");
   await expect(projects).toHaveText([
     "Self-testing QA Portfolio",
+    "Agentic Finance Tracker",
     "M4PP Playwright Automation Suite",
     "Integrated Release Assurance",
   ]);
   await expect(page.locator('#work a[href="#qa-lab"]')).toHaveCount(0);
+});
+
+test("Agentic Finance Tracker is labelled as AI-built with human QA, in both languages @regression", async ({ page, portfolioPage }) => {
+  const card = page.locator("#work .project-row").filter({
+    has: page.getByRole("heading", { name: "Agentic Finance Tracker", exact: true }),
+  });
+  await expect(card.locator(".project-type")).toHaveText("AI-built system · human QA");
+  await expect(card.getByRole("link")).toHaveCount(2);
+  await portfolioPage.languageButton.click();
+  await expect(card.locator(".project-type")).toHaveText("Sistema creado con IA · QA humano");
+  await expect(card.getByRole("link", { name: "Ver repositorio del tracker", exact: true }))
+    .toHaveAttribute("href", /github\.com\/joaquinganan\/agentic-fin-tracker\/?$/);
 });
 
 test("QA Lab tabs can all be closed and reopened @regression", async ({ page }) => {
