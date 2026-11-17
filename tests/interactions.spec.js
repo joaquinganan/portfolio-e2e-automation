@@ -69,7 +69,8 @@ test("Agentic Finance Tracker is labelled as AI-built with human QA, in both lan
   await expect(demo).toHaveAttribute("target", "_blank");
   const player = await page.request.get("/demos/agentic-fin-tracker.html");
   expect(player.ok()).toBeTruthy();
-  expect(await player.text()).toContain('<source src="/demos/agentic-fin-tracker-demo.webm" type="video/webm">');
+  // optional ?v=N cache-buster on the video URLs
+  expect(await player.text()).toMatch(/<source src="\/demos\/agentic-fin-tracker-demo\.webm(\?[^"]*)?" type="video\/webm">/);
   for (const file of ["agentic-fin-tracker-demo.webm", "agentic-fin-tracker-demo.mp4"]) {
     const video = await page.request.get(`/demos/${file}`);
     expect(video.ok(), file).toBeTruthy();
